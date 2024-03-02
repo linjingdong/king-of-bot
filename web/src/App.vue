@@ -31,5 +31,9 @@ onMounted(()=>{
 })
 </script>
 
-<style scoped>
+<style>
+body{
+  background-image: url("./asssets/background.png");
+  background-size: cover;
+}
 </style>
