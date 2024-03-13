@@ -1,39 +1,18 @@
 <template>
-  <h1>bot名称:{{ botinfo.name }}</h1>
-  <h1>bot战力:{{ botinfo.rating }}</h1>
+  <NavBar />
   <RouterView></RouterView>
 </template>
 
 <script setup>
 import { RouterView } from 'vue-router';
-import { ref, onMounted } from 'vue';
-import { getBotInfo} from './api/botinfoApi';
-
-//定义假数据
-let botinfo = ref({
-  name:'',
-  rating:''
-})
-
-//展示数据
-let showdata = () => {
-  getBotInfo().then(
-    response=>{
-      botinfo.value=response.data;
-      console.log(botinfo);
-      console.log(botinfo.value)
-    }
-  )
-}
-
-onMounted(()=>{
-  showdata()
-})
+import NavBar from './components/NavBar.vue';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.min.js'
 </script>
 
 <style>
-body{
-  background-image: url("./asssets/background.png");
+body {
+  background-image: url("./asssets/images/background.png");
   background-size: cover;
 }
 </style>
