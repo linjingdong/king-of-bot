@@ -24,6 +24,7 @@ export class GameMap extends AcGameObect {
             new Snake({ id: 0, color: "#f94848", r: this.rows - 2, c: 1 }, this),
             new Snake({ id: 1, color: "#4876ec", r: 1, c: this.cols - 2 }, this),
         ];
+
     }
 
     check_connectivity(g, sx, sy, tx, ty) {
@@ -99,10 +100,10 @@ export class GameMap extends AcGameObect {
             else if (e.key === 'd') snake0.set_direction(1);
             else if (e.key === 's') snake0.set_direction(2);
             else if (e.key === 'a') snake0.set_direction(3);
-            else if (e.key === 'ArrowUp') snake1.set_direction(0);
-            else if (e.key === 'ArrowRight') snake1.set_direction(1);
-            else if (e.key === 'ArrowDown') snake1.set_direction(2);
-            else if (e.key === 'ArrowLeft') snake1.set_direction(3);
+            else if (e.key === 'i') snake1.set_direction(0);
+            else if (e.key === 'l') snake1.set_direction(1);
+            else if (e.key === 'k') snake1.set_direction(2);
+            else if (e.key === 'j') snake1.set_direction(3);
         });
     }
 
@@ -137,6 +138,26 @@ export class GameMap extends AcGameObect {
             snake.next_step();
         }
     }
+
+    check_valid(cell) { // 检测目标位置是否合法，没有撞到两条蛇的身体或障碍物
+        for (const wall of this.walls) {
+            if (wall.r === cell.r && wall.c === cell.c)
+                return false;
+        }
+
+        for (const snake of this.snakes) {
+            let k = snake.cells.length;
+            if (!snake.check_tail_increasing()) { // 当蛇尾会前进的时候，就不要判断
+                k--;
+            }
+            for (let i = 0; i < k; i++) {
+                if (snake.cells[i].r === cell.r && snake.cells[i].c === cell.c)
+                    return false;
+            }
+        }
+        return true;
+    }
+
 
     update() {
         this.update_size();
