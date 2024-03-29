@@ -5,20 +5,23 @@
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <RouterLink :class="route_name == 'pk-index' ? 'nav-link active' : 'nav-link'" :to="{ name: 'pk-index' }">对战</RouterLink>
-                    </li> 
-                    <li class="nav-item">
-                        <RouterLink :class="route_name == 'record-index' ? 'nav-link active' : 'nav-link'" :to="{ name: 'record-index' }">对战列表</RouterLink>
+                        <RouterLink :class="route_name == 'pk-index' ? 'nav-link active' : 'nav-link'"
+                            :to="{ name: 'pk-index' }">对战</RouterLink>
                     </li>
                     <li class="nav-item">
-                        <RouterLink :class="route_name == 'ranklist-index' ? 'nav-link active' : 'nav-link'" :to="{ name: 'ranklist-index' }">排行榜</RouterLink>
+                        <RouterLink :class="route_name == 'record-index' ? 'nav-link active' : 'nav-link'"
+                            :to="{ name: 'record-index' }">对战列表</RouterLink>
+                    </li>
+                    <li class="nav-item">
+                        <RouterLink :class="route_name == 'ranklist-index' ? 'nav-link active' : 'nav-link'"
+                            :to="{ name: 'ranklist-index' }">排行榜</RouterLink>
                     </li>
                 </ul>
-                <ul class="navbar-nav ">
+                <ul class="navbar-nav " v-if="$store.state.user.is_login">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
-                            个人中心
+                            {{ $store.state.user.username }}
                         </a>
                         <ul class="dropdown-menu">
                             <li>
@@ -28,8 +31,20 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="#">退出</a></li>
+                            <li><a class="dropdown-item" href="#" @click="logout">退出</a></li>
                         </ul>
+                    </li>
+                </ul>
+                <ul class="navbar-nav " v-else>
+                    <li class="nav-item">
+                        <RouterLink class="nav-link" role="button" :to="{ name: 'user_account_login' }">
+                            登录
+                        </RouterLink>
+                    </li>
+                    <li class="nav-item">
+                        <RouterLink class="nav-link" role="button" :to="{ name: 'user_account_register' }">
+                            注册
+                        </RouterLink>
                     </li>
                 </ul>
             </div>
@@ -38,12 +53,17 @@
 </template>
 
 <script setup>
-import { RouterLink,useRoute } from 'vue-router';
+import { RouterLink, useRoute } from 'vue-router';
 import { computed } from 'vue';
+import { useStore } from 'vuex';
 
-const route = useRoute() 
-let route_name = computed(()=>route.name)
+const route = useRoute();
+const store = useStore();
+let route_name = computed(() => route.name);
 
+const logout = () => {
+    store.dispatch("logout");
+}
 </script>
 
 <style scoped></style>

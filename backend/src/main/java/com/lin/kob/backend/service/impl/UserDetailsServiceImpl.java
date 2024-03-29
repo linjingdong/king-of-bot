@@ -3,7 +3,7 @@ package com.lin.kob.backend.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.lin.kob.backend.mapper.UserMapper;
 import com.lin.kob.backend.pojo.User;
-import com.lin.kob.backend.service.impl.utils.UserDetailImpl;
+import com.lin.kob.backend.service.impl.utils.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -29,6 +29,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (user == null) {
             throw new RuntimeException("User not found！");
         }
-        return new UserDetailImpl(user);
+        return new UserDetailsImpl(user);
     }
 }
