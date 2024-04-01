@@ -8,7 +8,10 @@ const request = axios.create({
 
 request.interceptors.request.use(
     config => {
-        config.headers.Authorization = "Bearer " + store.state.user.token;
+        let token = localStorage.getItem("jwt_token")
+        if (token !== null) {
+            config.headers.Authorization = "Bearer " + token;
+        }
         return config;
     },
     error => Promise.error(error)

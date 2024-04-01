@@ -28,9 +28,9 @@ import { useRouter } from 'vue-router';
 const store = useStore();
 const router = useRouter();
 
-let username = ref('')
-let password = ref('')
-let error_message = ref('')
+let username = ref('');
+let password = ref('');
+let error_message = ref('');
 
 const login = () => {
     error_message.value = "";
@@ -40,8 +40,8 @@ const login = () => {
             password: password.value
         }
     })
-        .then(async () => {
-            await store.dispatch("getInfo")
+        .then(() => {
+            store.dispatch("getInfo")
                 .then(() => {
                     console.log(store.state.user)
                     router.push({ name: "home" });
