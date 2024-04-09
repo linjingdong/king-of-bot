@@ -49,7 +49,7 @@ public class AddServiceImpl implements AddService {
         }
 
 
-        if (description == null) {
+        if (description == null || description.isEmpty()) {
             description = "这个用户很懒，什么也没留下~";
         }
 
@@ -59,7 +59,7 @@ public class AddServiceImpl implements AddService {
         }
 
         if (content == null || content.isEmpty()) {
-            map.put("error_message", "代码长度不能为空");
+            map.put("error_message", "代码不能为空");
             return map;
         }
 
