@@ -67,7 +67,6 @@ export default {
         logout(context) {
             localStorage.removeItem("jwt_token");
             context.commit("logout");
-            console.log(store.state.user.pulling_info)
         }
     },
     modules: {}
