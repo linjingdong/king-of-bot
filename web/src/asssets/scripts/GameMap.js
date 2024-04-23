@@ -67,7 +67,7 @@ export class GameMap extends AcGameObect {
 
         // 遍历gamemap的每个单位，给map上墙与障碍物
 
-        const g = this.store.state.pk.game_map;
+        const g = this.store.state.pk.gamemap;
 
         for (let r = 0; r < this.rows; r++) {
             for (let c = 0; c < this.cols; c++) {
@@ -81,18 +81,19 @@ export class GameMap extends AcGameObect {
 
     add_listening_events() {
         this.ctx.canvas.focus();
-
-        const [snake0, snake1] = this.snakes;
-
         this.ctx.canvas.addEventListener("keydown", e => {
-            if (e.key === 'w') snake0.set_direction(0);
-            else if (e.key === 'd') snake0.set_direction(1);
-            else if (e.key === 's') snake0.set_direction(2);
-            else if (e.key === 'a') snake0.set_direction(3);
-            else if (e.key === 'i') snake1.set_direction(0);
-            else if (e.key === 'l') snake1.set_direction(1);
-            else if (e.key === 'k') snake1.set_direction(2);
-            else if (e.key === 'j') snake1.set_direction(3);
+            let d = -1;
+            if (e.key === 'w') d = 0;
+            else if (e.key === 'd') d = 1;
+            else if (e.key === 's') d = 2;
+            else if (e.key === 'a') d = 3;
+
+            if (d >= 0) {
+                this.store.state.pk.socket.send(JSON.stringify({
+                    event: "move",
+                    direction: d,
+                }));
+            }
         });
     }
 
