@@ -1,7 +1,7 @@
 <template>
     <div class="playground">
         <div class="row">
-            <div class="col-6">
+            <div class="col-4">
                 <div class="user-photo">
                     <img :src="$store.state.user.photo" alt="">
                 </div>
@@ -9,7 +9,17 @@
                     {{ $store.state.user.username }}
                 </div>
             </div>
-            <div class="col-6">
+            <div class="col-4">
+                <div class="user-select-bot">
+                    <select v-model="select_bot" class="form-select" aria-label="Default select example">
+                        <option value="-1" selected>亲自出马</option>
+                        <option v-for="bot in bots" :value="bot.id" :key="bot.id">
+                            {{ bot.title }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-4">
                 <div class="user-photo">
                     <img :src="$store.state.pk.opponent_photo" alt="">
                 </div>
@@ -27,15 +37,20 @@
 <script setup>
 import { useStore } from 'vuex';
 import { ref } from 'vue';
+import { getList } from '@/api/user/bot/GetBotList';
 
 const store = useStore();
 let match_btn_info = ref("开始匹配");
+let bots = ref("");
+let select_bot = ref("-1");
 
 const click_match_btn = () => {
     if (match_btn_info.value === "开始匹配") {
         match_btn_info.value = "取消";
+        console.log(select_bot.value);
         store.state.pk.socket.send(JSON.stringify({
             event: "start-matching",
+            bot_id: select_bot.value,
         }))
     } else {
         match_btn_info.value = "开始匹配";
@@ -45,6 +60,13 @@ const click_match_btn = () => {
     }
 }
 
+const refresh_bots = async () => {
+    await getList().then(resp => {
+        bots.value = resp.data;
+    })
+}
+
+refresh_bots();
 </script>
 
 <style scoped>
@@ -76,5 +98,14 @@ div.user-username {
 div.btn-matching {
     text-align: center;
     padding-top: 15vh;
+}
+
+div.user-select-bot {
+    padding-top: 20vh;
+}
+
+div.user-select-bot>select {
+    width: 50%;
+    margin: 0px auto;
 }
 </style>

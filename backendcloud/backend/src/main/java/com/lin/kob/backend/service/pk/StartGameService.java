@@ -7,5 +7,5 @@ package com.lin.kob.backend.service.pk;
  * @Version 1.0
  */
 public interface StartGameService {
-    String startGame(Integer aId, Integer bId);
+    String startGame(Integer aId, Integer aBotId, Integer bId, Integer bBotId);
 }

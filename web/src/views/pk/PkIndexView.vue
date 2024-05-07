@@ -14,6 +14,8 @@ import { onMounted, onUnmounted } from 'vue';
 const store = useStore();
 const socketUrl = `ws://localhost:8080/websocket/${store.state.user.token}`;
 
+store.commit("updateLoser", "none");
+
 let socket = null;
 onMounted(() => {
     store.commit("udpateOpponent", {
