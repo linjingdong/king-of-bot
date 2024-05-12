@@ -41,7 +41,7 @@ public class WebSocketServer {
     private static final String addPlayerUrl = "http://127.0.0.1:3000/player/add/";
     private static final String removePlayerUrl = "http://127.0.0.1:3000/player/remove/";
 
-    private static UserMapper userMapper;
+    public static UserMapper userMapper;
     private static BotMapper botMapper;
     public static RecordMapper recordMapper;
 

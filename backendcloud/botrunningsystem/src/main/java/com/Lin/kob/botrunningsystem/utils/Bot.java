@@ -13,7 +13,7 @@ public class Bot implements com.Lin.kob.botrunningsystem.utils.BotInterface {
         }
     }
 
-    private boolean check_tail_increasing(int step) { // 检验当前回合蛇的长度是否增加
+    private boolean check_tail_increasing(int step) {
         if (step <= 10) return true;
         return step % 3 == 1;
     }
